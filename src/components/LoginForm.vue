@@ -39,11 +39,7 @@ const rules = reactive<FormRules<typeof ruleForm>>({
 import {LoginApi} from "@/request/api";
 import {ElMessage} from 'element-plus' 
 
-// import instance from "@/request/http";
-// const login = async (data: any) => {
-//   let res = await instance.post('localhost:8080/user/login', data)
-//   return res
-// } 
+//import {login} from "@/request/user"
 
 const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
