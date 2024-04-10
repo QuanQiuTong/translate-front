@@ -52,7 +52,7 @@ export const TestHello = (): Res<null> =>
 
 //登录 api
 export const LoginApi = (data: ReqLogin): Res<null> =>
-    instance.post('http://localhost/8080/user/login', data);
+    instance.post('/api/login', data);
 
 //注册 api
 export const RegisterApi = (data: ReqRegister): Res<null> =>
