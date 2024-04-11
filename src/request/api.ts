@@ -96,10 +96,3 @@ export const ProductCategoryApi = (params: { parentId: number }): any =>
 // get请求，有参数，(如果你不会写类型也可以使用any,不过不建议,因为用了之后 和没写TS一样)
 export const AdminListAPI = (params: any): any =>
     instance.get("/admin/list", { params });
-
-interface submitPassage {
-    content: string;
-}
-
-export const submitAPI = (data: submitPassage): Res<string> =>
-    instance.post("localhost:8080/trans/submitPassage", data);

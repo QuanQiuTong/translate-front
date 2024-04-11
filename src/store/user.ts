@@ -22,10 +22,3 @@ export const myUserStore = defineStore('user', {
     }
 }
 )
-
-var userNameStore
-var authKeyStore
-
-export const storeUser = (userName: string, authKey: string): void => {
-
-}

@@ -1,6 +1,4 @@
 import axios from 'axios'
-import { myUserStore } from '@/store/user'
-const userStore = myUserStore()
 
 const request = axios.create({
     baseURL: 'http://localhost:8080/trans',
@@ -9,9 +7,9 @@ const request = axios.create({
     headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': userStore.authKey
     }
 })
+request.defaults.withCredentials = true;
 
 request.interceptors.request.use(config => {
     return config
@@ -38,6 +36,10 @@ interface Response {
     statusText: string
 }
 
-export const translate = (data: TranslateData) : Promise<Response> => {
-    return request.post('/submitPassage', data)
+export const translate = (data: TranslateData, token: string | null): Promise<Response> => {
+    return request.post('/submitPassage', data, {
+        headers: {
+            'Authorization': localStorage.getItem('token')
+        }
+    });
 }

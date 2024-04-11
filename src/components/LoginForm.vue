@@ -58,26 +58,15 @@ const submitForm = (formEl: FormInstance | undefined) => {
       console.log(r.data)
 
       if (r.data.code === 0) {
-        myStore.$patch({
-          userName: ruleForm.userName,
-          authKey: r.data.data
-        })
-        // userName.value = ruleForm.userName
-        // authKey.value = r.data.data
-
-        console.log(myStore.userName)
+        ElMessage.success('登录成功')
+        localStorage.setItem('userName', ruleForm.userName)
+        localStorage.setItem('token', r.data.data)
+        await router.push('/')
+      }else{
+        ElMessage.error('登录失败，请重新输入用户名和密码')
       }
-
-      // if (res.success) {
-      //   ElMessage.success('登陆成功')
-      //   userStore.userName = ruleForm.userName
-      //   await router.push({ name: 'IndexMain', params: { userName: ruleForm.userName } });
-
-      // } else {
-      //   ElMessage.error('登陆失败，请重新输入用户名和密码')
-      // }
     } else {
-      ElMessage.error('登陆失败，未输入用户名和密码')
+      ElMessage.error('登录失败，未输入用户名和密码')
       return false
     }
   })
