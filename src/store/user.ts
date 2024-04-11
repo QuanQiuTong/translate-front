@@ -5,17 +5,27 @@ export const useUserstore = defineStore(
     {
         state() {
             return {
-                userName: 'userName'
+                userName: 'userName',
+                authKey: 'sunge',
+                test: 'test'
             }
         }
     }
 )
-export const userStore = defineStore({
-    id: 'user',
-    state() {
+
+export const myUserStore = defineStore('user', {
+    state:()=>{
         return {
-            userName: 'userName',
-            authKey: 'authKey'
+            userName: 'QuanQiuTong',
+            authKey: 'testAuthKey'
         }
     }
-})
+}
+)
+
+var userNameStore
+var authKeyStore
+
+export const storeUser = (userName: string, authKey: string): void => {
+
+}

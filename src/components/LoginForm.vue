@@ -41,6 +41,12 @@ import { ElMessage } from 'element-plus'
 
 import { login } from "@/request/user"
 
+import { myUserStore } from '@/store/user';
+const myStore = myUserStore();
+const {userName, authKey } = storeToRefs(myStore)
+
+import { storeToRefs } from 'pinia';
+
 const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
   formEl.validate(async (valid) => {
@@ -49,10 +55,17 @@ const submitForm = (formEl: FormInstance | undefined) => {
         username: ruleForm.userName,
         password: ruleForm.password
       })
-      console.log(r)
+      console.log(r.data)
 
       if (r.data.code === 0) {
-          
+        myStore.$patch({
+          userName: ruleForm.userName,
+          authKey: r.data.data
+        })
+        // userName.value = ruleForm.userName
+        // authKey.value = r.data.data
+
+        console.log(myStore.userName)
       }
 
       // if (res.success) {
@@ -73,6 +86,11 @@ const submitForm = (formEl: FormInstance | undefined) => {
 function jumpToRegister() {
   router.push('/register')
 }
+function showStore(){
+  
+console.log(myStore.userName)
+console.log(myStore.authKey)
+}
 
 </script>
 
@@ -89,9 +107,9 @@ function jumpToRegister() {
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" @click="submitForm(ruleFormRef)">登录
-      </el-button>
+      <el-button type="primary" @click="submitForm(ruleFormRef)">登录</el-button>
       <el-button type="success" @click="jumpToRegister()">注册</el-button>
+      <el-button @click="showStore()">showStore</el-button>
     </el-form-item>
 
   </el-form>

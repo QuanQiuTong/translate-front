@@ -8,11 +8,23 @@ import { translate } from "@/request/translate";
 let input = ref(""); // 定义一个响应式引用
 let res = ref(""); // 定义一个响应式引用
 
-function submit() {
-  res.value = translate({
+async function asubmit() {
+  let r = await translate({
     content: input.value
   });
+  res.value = r.data.data;
   console.log(res.value);
+}
+function submit() {
+  let r = translate({
+    content: input.value
+  });
+  console.log(r);
+}
+
+import { myUserStore } from "@/store/user";
+function showAuthKey(){
+  console.log(myUserStore().authKey)
 }
 </script>
 
@@ -34,7 +46,8 @@ function submit() {
             clearable></el-input>
           <el-input v-model="res" placeholder="响应内容"></el-input>
         </div>
-        <el-button @click="submit">提交</el-button>
+        <el-button @click="submit()">提交</el-button>
+        <el-button @click="showAuthKey()">showAuthKey</el-button>
 
       </el-main>
     </el-container>
