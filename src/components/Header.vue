@@ -18,12 +18,18 @@ async function logout() {
 <template>
   <div style="display: flex; justify-content: space-between; align-items: center;">
     <img src="https://img2.imgtp.com/2024/04/05/DMHKG7pg.jpg" alt="Logo" style="height: 50px;">
-    <div>
+    <div style="buttons">
+      <el-link type="primary" :underline="false" href="/signin">登录</el-link>
+      <el-link type="primary" :underline="false" href="/register">&nbsp;&nbsp;&nbsp;注册</el-link>
       <el-button type="info" @click="logout">登出</el-button>
     </div>
   </div>
 </template>
 
 <style scoped>
-
+.buttons{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
 </style>

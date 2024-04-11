@@ -8,37 +8,11 @@ import { translate } from "@/request/translate";
 let input = ref(""); // 定义一个响应式引用
 let out = ref(""); // 定义一个响应式引用
 
+import {request} from "@/request/translate";
 async function asubmit() {
-  translate({content:input.value},null)
-  .then(res => {
-    console.log(res.data)
-    out.value = res.data.data
-  }).catch(err => {
-    console.log("error:")
-    console.error(err)
-  })
-}
-
-import axios from 'axios';
-import { AxiosHeaders } from "node_modules/axios/index.cjs";
-async function bsubmit() {
-  console.log(localStorage.getItem('token'));
-  
-
-  axios.post('http://localhost:8080/trans/submitPassage', {
-    content: input.value
-  },
-    {
-      headers: {
-        'Authorization': localStorage.getItem('token')
-      }
-    }).then(res => {
-      console.log(res.data)
-      out.value = res.data.data
-    }).catch(err => {
-      console.log("error:")
-      console.error(err)
-    })
+  translate(input.value)
+    .then(res => {out.value = res.data.data})
+    .catch(err => {console.error(err)})
 }
 
 function showToken() {
@@ -56,17 +30,13 @@ function showToken() {
         <AsideNavBar></AsideNavBar>
       </el-aside>
       <el-main>
-        <el-link type="primary" :underline="false" href="/signin">登录</el-link>
-
-        <el-link type="primary" :underline="false" href="/register">&nbsp;&nbsp;&nbsp;注册</el-link><br />
         <div class="input-container">
           <el-input v-model="input" placeholder="请输入内容" :autosize="{ minRows: 10, maxRows: 50 }" type="textarea"
             clearable></el-input>
           <el-input v-model="out" placeholder="响应内容"></el-input>
         </div>
         <el-button @click="asubmit()">提交</el-button>
-        <el-button @click="bsubmit()">提交2</el-button>
-        <!-- <el-button @click="showToken()">showToken</el-button> -->
+        <el-button @click="showToken()">showToken</el-button>
 
       </el-main>
     </el-container>
@@ -78,7 +48,7 @@ function showToken() {
   display: flex;
   gap: 2%;
   justify-content: center;
-  align-items: flex-start; /* Modify this line */
+  align-items: flex-start;
   margin-top: 10px;
 }
 </style>

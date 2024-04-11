@@ -21,9 +21,6 @@ const routes =
         }, {
             path: '/test',
             component: () => import('@/pages/Test8080.vue')
-        },{
-            path: '/testtoken',
-            component: () => import('@/pages/TestToken.vue')
         }, {
             path: '/:pathMatch(.*)*',
             component: () => import('@/pages/NotFound.vue')
