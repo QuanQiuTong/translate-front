@@ -9,18 +9,14 @@ let input = ref(""); // 定义一个响应式引用
 let out = ref(""); // 定义一个响应式引用
 
 async function asubmit() {
-  try {
-    console.log(localStorage.getItem('token'));
-    let r = await translate({
-      content: input.value,
-    }, localStorage.getItem('token')
-
-    );
-    out.value = r.data.data;
-    console.log(out.value);
-  } catch (err) {
-    console.error(err);
-  }
+  translate({content:input.value},null)
+  .then(res => {
+    console.log(res.data)
+    out.value = res.data.data
+  }).catch(err => {
+    console.log("error:")
+    console.error(err)
+  })
 }
 
 import axios from 'axios';
@@ -70,7 +66,7 @@ function showToken() {
         </div>
         <el-button @click="asubmit()">提交</el-button>
         <el-button @click="bsubmit()">提交2</el-button>
-        <el-button @click="showToken()">showToken</el-button>
+        <!-- <el-button @click="showToken()">showToken</el-button> -->
 
       </el-main>
     </el-container>
@@ -82,7 +78,7 @@ function showToken() {
   display: flex;
   gap: 2%;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* Modify this line */
   margin-top: 10px;
 }
 </style>
