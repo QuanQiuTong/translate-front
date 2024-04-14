@@ -34,7 +34,7 @@ function change(key: string, keyPath: string[]) {
       <el-icon>
         <setting/>
       </el-icon>
-      <span>添加用户</span>
+      <span>偏好设置</span>
     </el-menu-item>
   </el-menu>
 </template>

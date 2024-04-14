@@ -8,20 +8,6 @@ const request = axios.create({
         'Content-Type': 'application/x-www-form-urlencoded'
     }
 })
-
-request.defaults.withCredentials = true;
-
-request.interceptors.request.use(config => {
-    return config
-}, error => {
-    return Promise.reject(error)
-})
-
-request.interceptors.response.use(response => {
-    return response
-}, error => {
-    return Promise.reject(error)
-})
 interface User {
     username: string
     password: string
@@ -50,12 +36,14 @@ export const login = (data: User): Promise<Response> =>
 //     })
 // }
 
-export function getUserInfo() {
-    request.get('/userInfo').then(res => {
-        return res.data
-    }).catch(err => {
-        console.log(err)
-    })
+export async function getUserInfo(): Promise<Response> {
+    try {
+        const res = await request.get('/userInfo');
+        return res.data;
+    } catch (err) {
+        console.log(err);
+        throw err; // Rethrow the error to be handled by the caller
+    }
 }
 
 export function updateUserInfo(data: User) {
