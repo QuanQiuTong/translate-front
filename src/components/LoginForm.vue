@@ -15,7 +15,6 @@ const ruleForm = reactive({
   password: ''
 })
 
-
 const checkUserName = (rule: any, value: any, callback: any) => {
   if (value === '') {
     return callback(new Error('请输入用户名'))
@@ -36,16 +35,11 @@ const rules = reactive<FormRules<typeof ruleForm>>({
   userName: [{ validator: checkUserName, trigger: 'blur' }],
   password: [{ validator: checkPassword, trigger: 'blur' }],
 })
-import { LoginApi } from "@/request/api";
 import { ElMessage } from 'element-plus'
 
 import { login } from "@/request/user"
 
-import { myUserStore } from '@/store/user';
-const myStore = myUserStore();
-const {userName, authKey } = storeToRefs(myStore)
-
-import { storeToRefs } from 'pinia';
+import { latestSession, newSession } from '@/request/session';
 
 const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
@@ -59,7 +53,6 @@ const submitForm = (formEl: FormInstance | undefined) => {
 
       if (r.data.code === 0) {
         ElMessage.success('登录成功')
-        localStorage.setItem('userName', ruleForm.userName)
         localStorage.setItem('token', r.data.data)
         await router.push('/')
       }else{
@@ -74,11 +67,6 @@ const submitForm = (formEl: FormInstance | undefined) => {
 
 function jumpToRegister() {
   router.push('/register')
-}
-function showStore(){
-  
-console.log(myStore.userName)
-console.log(myStore.authKey)
 }
 
 </script>
@@ -98,7 +86,6 @@ console.log(myStore.authKey)
     <el-form-item>
       <el-button type="primary" @click="submitForm(ruleFormRef)">登录</el-button>
       <el-button type="success" @click="jumpToRegister()">注册</el-button>
-      <el-button @click="showStore()">showStore</el-button>
     </el-form-item>
 
   </el-form>

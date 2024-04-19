@@ -48,9 +48,9 @@ router.beforeEach((to, from, next) => {
 );
 
 router.afterEach((to, from) => {
-    console.log('after each');
-    console.log(to);
-    console.log(from);
+    // console.log('after each');
+    // console.log(to);
+    // console.log(from);
 }
 );
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import AsideNavBar from "@/components/AsideNavBar.vue";
 import Header from "@/components/Header.vue";
 
@@ -8,16 +8,20 @@ import { translate } from "@/request/translate";
 let input = ref(""); // 定义一个响应式引用
 let out = ref(""); // 定义一个响应式引用
 
-import { request } from "@/request/translate";
-async function asubmit() {
+function submit() {
   translate(input.value)
     .then(res => { out.value = res.data.data })
     .catch(err => { console.error(err) })
 }
 
-function showToken() {
-  console.log(localStorage.getItem('token'))
+import { newSession, getSessionList, initializeSession } from "@/request/session";
+
+onMounted(initializeSession)
+
+function showSessionID() {
+  console.log(localStorage.sessionID)
 }
+
 </script>
 
 <template>
@@ -37,8 +41,10 @@ function showToken() {
             clearable></el-input>
           <el-input v-model="out" placeholder="响应内容" autosize type="textarea"></el-input>
         </div>
-        <el-button @click="asubmit()">提交</el-button>
-        <el-button @click="showToken()">showToken</el-button>
+        <el-button @click="submit()">提交</el-button>
+        <el-button @click="newSession()">newSession</el-button>
+        <el-button @click="getSessionList()">listSession</el-button>
+        <el-button @click="showSessionID()">showSessionID</el-button>
         <br><br><br><br>
 
       </el-main>
