@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const req = (url: string) =>
-    axios.post('http://localhost:8080/tempPrefer' + url,
+    axios.post('api/tempPrefer' + url,
         { sessionId: localStorage.sessionID },
         {
             withCredentials: true,

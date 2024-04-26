@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const request = axios.create({
-    baseURL: 'http://localhost:8080/session',
+    baseURL: 'api/session',
     timeout: 2000,
     withCredentials: true,
 })
@@ -54,7 +54,7 @@ export const latestSession = async (): Promise<sessionOutline> => {
 
 const setPreference = async (style: string, sourceLanguage: string, targetLanguage: string) => {
     let res = await axios.post(
-        'http://localhost:8080/tempPrefer/setLanguage', {
+        'api/tempPrefer/setLanguage', {
         sessionId: parseInt(localStorage.sessionID),
         source_language: sourceLanguage,
         target_language: targetLanguage
@@ -63,7 +63,7 @@ const setPreference = async (style: string, sourceLanguage: string, targetLangua
         headers: { Authorization: localStorage.token }
     })
     await axios.post(
-        'http://localhost:8080/tempPrefer/setStyle', {
+        'api/tempPrefer/setStyle', {
         sessionId: parseInt(localStorage.sessionID),
         style: style
     }, {

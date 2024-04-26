@@ -49,11 +49,11 @@
             <div class="col-md-6">
               <div class="top-0 oblique position-absolute h-100 d-md-block d-none me-n8">
                 <div class="bg-cover oblique-image position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" :style="{
-                  backgroundImage:
-                    'url(' +
-                    require('@/assets/img/curved-images/curved9.jpg') +
-                    ')',
-                }"></div>
+            backgroundImage:
+              'url(' +
+              require('@/assets/img/curved-images/curved9.jpg') +
+              ')',
+          }"></div>
               </div>
             </div>
           </div>
@@ -93,21 +93,16 @@ onBeforeUnmount(() => {
 
 
 import { useRouter } from "vue-router";
-import { initializeSession } from "../request/session";
 
 const router = useRouter();
 
 const handleSubmit = (e) => {
   e.preventDefault();
 
-  login({
-    username: e.target.username.value,
-    password: e.target.password.value,
-  })
+  login(e.target.username.value, e.target.password.value)
     .then((res) => {
       console.log(res.data);
       localStorage.setItem("token", res.data.data);
-      initializeSession();
       router.push({ name: "Dashboard" });
     })
     .catch((err) => {
