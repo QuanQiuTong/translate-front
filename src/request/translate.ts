@@ -22,12 +22,11 @@ interface Response {
     statusText: string
 }
 
-export const translate = async (data: string): Promise<Response> => {
-    return request.post(
+export const translate = async (data: string): Promise<Response> =>
+    request.post(
         '/submitPassage',
         {
             sessionId: parseInt(localStorage.sessionID),
             content: data
         }
-    );
-}
+    )
