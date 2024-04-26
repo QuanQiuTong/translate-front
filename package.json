@@ -1,31 +1,53 @@
 {
-  "name": "vue-project",
-  "version": "0.0.0",
+  "name": "vue-soft-ui-dashboard",
+  "version": "3.0.0",
   "private": true,
-  "type": "module",
+  "author": "Creative Tim",
+  "license": "SEE LICENSE IN <https://www.creative-tim.com/license>",
+  "description": "VueJS version of Soft UI Dashboard PRO by Creative Tim",
+  "homepage": "https://demos.creative-tim.com/vue-soft-ui-dashboard/",
+  "bugs": {
+    "url": "https://github.com/creativetimofficial/vue-soft-ui-dashboard/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/creativetimofficial/vue-soft-ui-dashboard.git"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
-    "preview": "vite preview",
-    "build-only": "vite build",
-    "type-check": "vue-tsc --build --force"
+    "build": "vite build",
+    "serve": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-brands-svg-icons": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/vue-fontawesome": "^3.0.0-5",
+    "@popperjs/core": "2.10.2",
     "axios": "^1.6.8",
-    "element-plus": "^2.6.3",
-    "pinia": "^2.1.7",
-    "vue": "^3.4.21",
-    "vue-router": "^4.0.13"
+    "bootstrap": "5.1.3",
+    "chart.js": "3.6.0",
+    "core-js": "3.6.5",
+    "element-plus": "^2.7.1",
+    "jkanban": "^1.3.1",
+    "vue": "^3.4.23",
+    "vue-flatpickr-component": "9.0.5",
+    "vue-router": "^4.0.0-0",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
-    "@tsconfig/node20": "^20.1.2",
-    "@types/node": "^20.11.28",
-    "@types/vue": "^2.0.0",
-    "@vitejs/plugin-vue": "^5.0.4",
-    "@vue/tsconfig": "^0.5.1",
-    "npm-run-all2": "^6.1.2",
-    "typescript": "~5.4.0",
-    "vite": "^5.1.6",
-    "vue-tsc": "^2.0.6"
+    "@originjs/vite-plugin-commonjs": "^1.0.1",
+    "@vitejs/plugin-vue": "^2.0.1",
+    "@vitejs/plugin-vue-jsx": "^1.3.2",
+    "@vue/compiler-sfc": "3.2.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "prettier": "^2.4.1",
+    "sass": "1.43.3",
+    "vite": "^2.7.2",
+    "vite-plugin-env-compatible": "^1.1.1",
+    "vite-plugin-html": "3.2.0"
   }
 }

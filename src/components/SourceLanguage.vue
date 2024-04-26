@@ -1,5 +1,5 @@
 <template>
-    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+    <el-menu :default-active="activeIndex" class="menu-bar" mode="horizontal" @select="handleSelect">
         <el-menu-item index="0">{{ langList[0] }}</el-menu-item>
         <el-menu-item index="1">{{ langList[1] }}</el-menu-item>
         <el-menu-item index="2">{{ langList[2] }}</el-menu-item>
@@ -49,10 +49,3 @@ const handleSelect = (key: string, keyPath: string[]) => {
     })
 }
 </script>
-
-<style scoped>
-.el-menu-demo {
-    height: 36px;
-    background-color: transparent;
-}
-</style>

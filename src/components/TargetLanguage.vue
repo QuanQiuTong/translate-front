@@ -1,5 +1,5 @@
 <template>
-    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+    <el-menu :default-active="activeIndex" class="menu-bar" mode="horizontal" @select="handleSelect">
         <el-menu-item index="0">{{ langList[0] }}</el-menu-item>
         <el-menu-item index="1">{{ langList[1] }}</el-menu-item>
         <el-menu-item index="2">{{ langList[2] }}</el-menu-item>
@@ -22,10 +22,10 @@
 import axios from 'axios';
 import { ref } from 'vue'
 
-const langList = ['简体中文', '繁体中文', '英语', { "3-0": "德语" }]
+const langList = ['中文', '英语', '英语', { "3-0": "德语" }]
 const langMap = {
     0: 'zh',
-    1: '繁体中文',
+    1: 'en',
     2: 'en',
     "3-0": '德语',
     "3-1": "jp",
@@ -49,10 +49,3 @@ const handleSelect = (key: string, keyPath: string[]) => {
     })
 }
 </script>
-
-<style scoped>
-.el-menu-demo {
-    height: 36px;
-    background-color: transparent;
-}
-</style>

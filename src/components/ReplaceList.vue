@@ -14,12 +14,18 @@
     <el-table :data="gridData">
         <el-table-column label="原词" prop="origin"></el-table-column>
         <el-table-column label="替换词" prop="replace"></el-table-column>
+        <el-table-column label="" width="60%">
+            <template #default="{ row }">
+                <el-button class="gradient-button-red" type="danger" :icon="Delete" size="small" @click="remove(row)" circle />
+            </template>
+        </el-table-column>
     </el-table>
 </template>
 
 <script lang="ts" setup>
 import axios from "axios";
 import SoftButton from "../components/SoftButton.vue";
+import { Delete } from "@element-plus/icons-vue";
 import { ref } from 'vue'
 
 const getReplace = async (url: string = 'http://localhost:8080/session/getReplace') =>
@@ -41,15 +47,18 @@ const postReplace = (origin: string, replace: string, url: string = 'http://loca
     })
 }
 
-const origin = ref('')
-const replace = ref('')
-const add = () => {
-    if (origin.value === '' || replace.value === '')
-        return
-    gridData.value.push({ "origin": origin.value, "replace": replace.value })
-    postReplace(origin.value, replace.value)
-    origin.value = ''
-    replace.value = ''
+const deleteReplace = (origin: string, url: string = 'http://localhost:8080/session/deleteReplace') => {
+    axios.delete(url, {
+        data: {
+            session_id: parseInt(localStorage.sessionID),
+            replace_from: origin
+        },
+        headers: { Authorization: localStorage.token }
+    }).then(res => {
+        console.log(res.data)
+    }).catch(err => {
+        console.error(err)
+    })
 }
 
 getReplace().then(res => {
@@ -60,6 +69,8 @@ getReplace().then(res => {
 }).catch(err => {
     console.error(err)
 })
+
+
 
 const gridData = ref([
     {
@@ -76,6 +87,23 @@ const gridData = ref([
         replace: 'Hallo',
     },
 ])
+
+const origin = ref('')
+const replace = ref('')
+const add = () => {
+    if (origin.value === '' || replace.value === '')
+        return
+    gridData.value.push({ "origin": origin.value, "replace": replace.value })
+    postReplace(origin.value, replace.value)
+    origin.value = ''
+    replace.value = ''
+}
+
+const remove = (row: any) => {
+    deleteReplace(row.origin)
+    const index = gridData.value.indexOf(row)
+    gridData.value.splice(index, 1)
+}
 </script>
 
 <style scoped>
@@ -98,5 +126,24 @@ const gridData = ref([
 
 .SoftButton {
     height: 40px;
+}
+
+.del-btn {
+    background-color: bg-gradient-success !important;
+}
+</style>
+
+<style lang="scss" scoped>
+$button-gradient-colors: (
+  red: (#ff0000, #ff7f7f),
+  blue: (#0000ff, #7f7fff),
+  // Add more colors here
+);
+
+@each $prop, $value in $button-gradient-colors {
+  .gradient-button-#{$prop} {
+    background: linear-gradient(310deg, nth($value, 1) 0%, nth($value, -1) 100%);
+    border: none;
+  }
 }
 </style>
