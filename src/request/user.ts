@@ -1,12 +1,26 @@
 import axios from 'axios'
 
 const request = axios.create({
-    baseURL: 'api/user',
+    baseURL: 'http://localhost:8080/user',
     timeout: 2000,
     withCredentials: true,
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
     }
+})
+
+request.defaults.withCredentials = true;
+
+request.interceptors.request.use(config => {
+    return config
+}, error => {
+    return Promise.reject(error)
+})
+
+request.interceptors.response.use(response => {
+    return response
+}, error => {
+    return Promise.reject(error)
 })
 interface User {
     username: string
@@ -25,8 +39,8 @@ interface Response {
 export const register = (data: User): Promise<Response> =>
     request.post('/register', data);
 
-export const login = (username: string, password: string): Promise<Response> =>
-    request.post('/login', { username, password });
+export const login = (data: User): Promise<Response> =>
+    request.post('/login', data);
 
 // export function logout() {
 //     request.get('/logout').then(res => {
@@ -36,11 +50,26 @@ export const login = (username: string, password: string): Promise<Response> =>
 //     })
 // }
 
-export const getUserInfo = (): Promise<Response> =>
-    request.get('/userInfo');
+export function getUserInfo() {
+    request.get('/userInfo').then(res => {
+        return res.data
+    }).catch(err => {
+        console.log(err)
+    })
+}
 
-export const updateUserInfo = (data: User) =>
-    request.post('/update', data)
+export function updateUserInfo(data: User) {
+    request.post('/update', data).then(res => {
+        return res.data
+    }).catch(err => {
+        console.log(err)
+    })
+}
 
-export const updateAvatar = (data: FormData) =>
-    request.patch('/updateAvatar', data)
+export function updateAvatar(data: FormData) {
+    request.patch('/updateAvatar', data).then(res => {
+        return res.data
+    }).catch(err => {
+        console.log(err)
+    })
+}
