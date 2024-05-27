@@ -2,7 +2,7 @@
   <navbar btn-background="bg-gradient-primary" />
   <div class="pt-5 m-3 page-header align-items-start min-vh-50 pb-11 border-radius-lg" :style="{
     backgroundImage:
-      'url(' + require('@/assets/img/curved-images/curved6.jpg') + ')',
+      'url(' + backgroundImage + ')',
   }">
     <span class="mask bg-gradient-dark opacity-6"></span>
     <div class="container">
@@ -114,6 +114,7 @@
 </template>
 
 <script setup>
+import backgroundImage from "@/assets/img/curved-images/curved6.jpg";
 import Navbar from "@/examples/PageLayout/Navbar.vue";
 import AppFooter from "@/examples/PageLayout/Footer.vue";
 import SoftInput from "@/components/SoftInput.vue";
@@ -124,36 +125,33 @@ import { useStore } from 'vuex'
 
 const store = useStore()
 
-const toggleEveryDisplay = () => store.commit('toggleEveryDisplay')
-const toggleHideConfig = () => store.commit('toggleHideConfig')
-
 import { onMounted, onBeforeUnmount } from 'vue'
 
 onMounted(() => {
-  toggleEveryDisplay()
-  toggleHideConfig()
+  store.commit('toggleEveryDisplay')
+  store.commit('toggleHideConfig')
 })
 
 onBeforeUnmount(() => {
-  toggleEveryDisplay()
-  toggleHideConfig()
+  store.commit('toggleEveryDisplay')
+  store.commit('toggleHideConfig')
 })
 
 import { register } from "@/request/user";
 import { useRouter } from 'vue-router'
 
+const router = useRouter()
+
 const handleSubmit = (e) => {
   e.preventDefault()
-  register({
-    username: e.target.name.value,
-    password: e.target.password.value
-  }).then((res) => {
-    console.log(res.data)
-    //useRouter().push('/signin')
-  }).catch((err) => {
-    console.log('error')
-    //console.error(err)
-  })
+  register(e.target.name.value, e.target.password.value)
+    .then((res) => {
+      console.log(res.data)
+      router.push('/sign-in')
+    }).catch((err) => {
+      console.log('error')
+      //console.error(err)
+    })
 
 }
 </script>

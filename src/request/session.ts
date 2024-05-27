@@ -1,21 +1,16 @@
 import axios from 'axios'
 
-const request = axios.create({
-    baseURL: 'http://localhost:8080/session',
+const req = axios.create({
+    baseURL: 'api',
     timeout: 2000,
     withCredentials: true,
 })
 
-request.interceptors.request.use(
-    config => {
-        config.headers.Authorization = localStorage.token
-        return config
-    }, error => {
-        return Promise.reject(error)
-    }
+req.interceptors.request.use(
+    config => { config.headers.Authorization = localStorage.token; return config }
 )
 
-interface sessionOutline {
+export interface sessionOutline {
     createTime: string,
     sessionId: number,
     sourceLanguage: string,
@@ -27,25 +22,14 @@ interface sessionOutline {
     userId: number
 }
 
-export const newSession = async () => {
-    let res = await request.get('/create')
-    console.log(res.data)
-    let sessionID = parseInt(res.data.data)
-    localStorage.sessionID = sessionID
-    return sessionID
-}
-
-export const getSessionList = async () => {
-    let res = await request.get('/list')
-    console.log(res.data)
-    return res.data.data
-}
+export const newSession = () => req.get('/session/create'),
+    getSessionList = () => req.get('/session/list')
 
 export const latestSession = async (): Promise<sessionOutline> => {
-    let res = await getSessionList()
+    let res = (await req.get('/session/list')).data.data
     if (res.length === 0) {
-        await newSession()
-        res = await getSessionList()
+        await req.get('/session/create')
+        res = (await req.get('/session/list')).data.data
     }
     let outline: sessionOutline = res[res.length - 1]
     // localStorage.sessionID = outline.sessionId
@@ -53,24 +37,15 @@ export const latestSession = async (): Promise<sessionOutline> => {
 }
 
 const setPreference = async (style: string, sourceLanguage: string, targetLanguage: string) => {
-    let res = await axios.post(
-        'http://localhost:8080/tempPrefer/setLanguage', {
+    let res = await req.post('/tempPrefer/setLanguage', {
         sessionId: parseInt(localStorage.sessionID),
         source_language: sourceLanguage,
         target_language: targetLanguage
-    }, {
-        withCredentials: true,
-        headers: { Authorization: localStorage.token }
     })
-    await axios.post(
-        'http://localhost:8080/tempPrefer/setStyle', {
+    await req.post('/tempPrefer/setStyle', {
         sessionId: parseInt(localStorage.sessionID),
         style: style
-    }, {
-        withCredentials: true,
-        headers: { Authorization: localStorage.token }
     })
-
     console.log('setPreference')
     console.log(res.data)
     console.log('____________________')

@@ -12,7 +12,7 @@ const routes = [
   {
     path: "/",
     name: "/",
-    redirect: "/dashboard",
+    redirect: "/translate",
   },
   {
     path: "/dashboard",
@@ -37,7 +37,7 @@ const routes = [
   {
     path: "/profile",
     name: "Profile",
-    component: Profile,
+    component: () => import("@/views/UserInfo.vue"),// Profile,
   },
   {
     path: "/rtl-page",
@@ -53,6 +53,16 @@ const routes = [
     path: "/sign-up",
     name: "Sign Up",
     component: SignUp,
+  },
+  {
+    path: "/translate",
+    name: "Translate",
+    component: () => import("@/views/Translate.vue"),
+  },
+  {
+    path: "/user",
+    name: "User",
+    component: () => import("@/views/User.vue"),
   },
   {
     path: "/test",

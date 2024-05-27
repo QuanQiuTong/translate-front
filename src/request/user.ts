@@ -1,17 +1,13 @@
 import axios from 'axios'
 
 const request = axios.create({
-    baseURL: 'http://localhost:8080/user',
+    baseURL: 'api/user',
     timeout: 2000,
     withCredentials: true,
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
     }
 })
-interface User {
-    username: string
-    password: string
-}
 
 interface Response {
     config: object,
@@ -22,11 +18,11 @@ interface Response {
     statusText: string
 }
 
-export const register = (data: User): Promise<Response> =>
-    request.post('/register', data);
+export const register = (username: string, password: string): Promise<Response> =>
+    request.post('/register', { username, password });
 
-export const login = (data: User): Promise<Response> =>
-    request.post('/login', data);
+export const login = (username: string, password: string): Promise<Response> =>
+    request.post('/login', { username, password });
 
 // export function logout() {
 //     request.get('/logout').then(res => {
@@ -36,28 +32,13 @@ export const login = (data: User): Promise<Response> =>
 //     })
 // }
 
-export async function getUserInfo(): Promise<Response> {
-    try {
-        const res = await request.get('/userInfo');
-        return res.data;
-    } catch (err) {
-        console.log(err);
-        throw err; // Rethrow the error to be handled by the caller
-    }
-}
+export const getUserInfo = (): Promise<Response> =>
+    request.get('/userInfo',{
+        headers: { 'Authorization': localStorage.getItem('token') }
+    });
 
-export function updateUserInfo(data: User) {
-    request.post('/update', data).then(res => {
-        return res.data
-    }).catch(err => {
-        console.log(err)
-    })
-}
+export const updateUserInfo = (data: any) =>
+    request.post('/update', data)
 
-export function updateAvatar(data: FormData) {
-    request.patch('/updateAvatar', data).then(res => {
-        return res.data
-    }).catch(err => {
-        console.log(err)
-    })
-}
+export const updateAvatar = (data: FormData) =>
+    request.patch('/updateAvatar', data)
