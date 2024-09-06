@@ -2,27 +2,36 @@
     <nav class="top-0 navbar navbar-expand-lg position-absolute z-index-3"
         :class="isBlur ? isBlur : 'shadow-none my-2 navbar-transparent w-100'">
         <div class="container">
-            <router-link class="navbar-brand font-weight-bolder ms-lg-0 ms-3" to="/dashboard" v-bind="$attrs"
+            <router-link class="navbar-brand font-weight-bolder ms-lg-0 ms-3" to="/" v-bind="$attrs"
                 :class="isBlur ? 'text-dark' : 'text-white'">
                 Persona Linguist
             </router-link>
             <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
-                aria-label="Toggle navigation">
+                aria-label="Toggle navigation" @click="f">
                 <span class="navbar-toggler-icon mt-2">
-                    <span class="navbar-toggler-bar bar1"></span>
+                    <!-- <span class="navbar-toggler-bar bar1"></span>
                     <span class="navbar-toggler-bar bar2"></span>
-                    <span class="navbar-toggler-bar bar3"></span>
+                    <span class="navbar-toggler-bar bar3"></span> -->
+                    <arrow-down v-show="!visible" style="fill: darkgray;" />
+                    <arrow-up v-show="visible" style="fill: darkgray;" />
                 </span>
             </button>
-            <div class="collapse navbar-collapse" id="navigation">
+            <div v-show="visible" class="collapse navbar-collapse" id="navigation">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
                         <router-link class="nav-link d-flex align-items-center me-2 active" aria-current="page"
-                            to="/dashboard">
+                            to="/preference">
                             <i class="fa fa-chart-pie opacity-6 me-1" aria-hidden="true"
                                 :class="isBlur ? 'text-dark' : 'text-white'"></i>
-                            Dashboard
+                            Preference
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link me-2" to="/dictionary">
+                            <i class="fa fa-book opacity-6 me-1" aria-hidden="true"
+                                :class="isBlur ? 'text-dark' : 'text-white'"></i>
+                            Dictionary
                         </router-link>
                     </li>
                     <li class="nav-item">
@@ -49,8 +58,7 @@
                 </ul>
                 <ul class="navbar-nav d-lg-block d-none">
                     <li class="nav-item">
-                        <a href="https://github.com/Tarjan01/mobileInternet"
-                            class="btn btn-sm btn-round mb-0 me-1"
+                        <a href="https://github.com/Tarjan01/mobileInternet" class="btn btn-sm btn-round mb-0 me-1"
                             :class="isBlur ? 'bg-gradient-dark' : 'bg-gradient-success'">View GitHub</a>
                     </li>
                 </ul>
@@ -62,6 +70,10 @@
 <script setup>
 // import downArrWhite from "@/assets/img/down-arrow-white.svg";
 // import downArrBlack from "@/assets/img/down-arrow-dark.svg";
+
+import { ArrowDown, ArrowUp } from "@element-plus/icons-vue"
+
+import { ref } from 'vue'
 
 const props = defineProps({
     btnBackground: String,
@@ -75,5 +87,8 @@ const props = defineProps({
 const darkModes = () => ({
     "text-dark": props.darkMode,
 });
-
+const visible = ref(false)
+const f = () => {
+    visible.value = !visible.value
+}
 </script>

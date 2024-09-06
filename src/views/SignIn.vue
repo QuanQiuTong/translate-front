@@ -2,7 +2,7 @@
   <div class="container top-0 position-sticky z-index-sticky">
     <div class="row">
       <div class="col-12">
-        <navbar is-blur="blur blur-rounded my-3 py-2 start-0 end-0 mx-4 shadow" btn-background="bg-gradient-success"
+        <MyNavbar is-blur="blur blur-rounded my-3 py-2 start-0 end-0 mx-4 shadow" btn-background="bg-gradient-success"
           :dark-mode="true" />
       </div>
     </div>
@@ -18,7 +18,7 @@
                   <h3 class="font-weight-bolder text-success text-gradient">
                     Welcome back
                   </h3>
-                  <p class="mb-0">Enter your email and password to sign in</p>
+                  <p class="mb-0">Enter your username and password to sign in</p>
                 </div>
 
                 <div class="card-body">
@@ -50,13 +50,7 @@
               <div class="top-0 oblique position-absolute h-100 d-md-block d-none me-n8">
                 <div class="bg-cover oblique-image position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" :style="{
             backgroundImage:
-<<<<<<< HEAD
               'url(' + backgroundImage + ')',
-=======
-              'url(' +
-              require('@/assets/img/curved-images/curved9.jpg') +
-              ')',
->>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
           }"></div>
               </div>
             </div>
@@ -70,12 +64,12 @@
 
 <script setup>
 import backgroundImage from "@/assets/img/curved-images/curved9.jpg";
-import Navbar from "@/examples/PageLayout/Navbar.vue";
+import MyNavbar from "@/components/MyNavbar.vue";
 import AppFooter from "@/examples/PageLayout/Footer.vue";
 import SoftInput from "@/components/SoftInput.vue";
 import SoftSwitch from "@/components/SoftSwitch.vue";
 import SoftButton from "@/components/SoftButton.vue";
-
+import { ElMessage } from "element-plus";
 
 import { useStore } from 'vuex'
 import { onMounted, onBeforeUnmount } from 'vue'
@@ -101,21 +95,19 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
 
-  login(e.target.username.value, e.target.password.value)
-    .then((res) => {
-      console.log(res.data);
-      localStorage.setItem("token", res.data.data);
-<<<<<<< HEAD
-      router.push('/');
-=======
-      router.push({ name: "Dashboard" });
->>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  const res = await login(e.target.username.value, e.target.password.value);
+  console.log(res.data);
+
+  if(res.data.code !== 0) {
+    ElMessage.error(res.data.message);
+    return;
+  }
+  
+  localStorage.setItem("token", res.data.data);
+  localStorage.setItem("tokenTime", Date.now());
+  router.push('/');
 };
 </script>

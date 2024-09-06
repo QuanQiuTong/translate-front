@@ -17,24 +17,11 @@
 
 <script lang="ts" setup>
 import { ArrowDown } from '@element-plus/icons-vue'
-import axios from 'axios';
+import { postStyle } from '../request/pref'
 
 
 const styles = ['普通', '质朴', '幽默', '严肃', '']
 
-const postStyle = (style: string, url: string = 'http://localhost:8080/tempPrefer/setStyle') => {
-    axios.post(url, {
-        sessionId: parseInt(localStorage.sessionID),
-        style: style
-    }, {
-        headers: { Authorization: localStorage.token }
-    }).then(res => {
-        console.log(res.data)
-    })
-}
-
-const handleCommand = (command: string | number) => {
+const handleCommand = (command: string | number) =>
     postStyle(styles[command])
-
-}
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <navbar btn-background="bg-gradient-primary" />
+  <MyNavbar btn-background="bg-gradient-primary" />
   <div class="pt-5 m-3 page-header align-items-start min-vh-50 pb-11 border-radius-lg" :style="{
     backgroundImage:
       'url(' + backgroundImage + ')',
@@ -10,8 +10,7 @@
         <div class="mx-auto text-center col-lg-5">
           <h1 class="mt-5 mb-2 text-white">Welcome!</h1>
           <p class="text-white text-lead">
-            Use these awesome forms to login or create new account in your
-            project for free.
+            Register to start your journey of translation with us.
           </p>
         </div>
       </div>
@@ -84,9 +83,9 @@
               <div class="mb-3">
                 <soft-input id="name" type="text" placeholder="Name" aria-label="Name" />
               </div>
-              <div class="mb-3">
+              <!-- <div class="mb-3">
                 <soft-input id="email" type="email" placeholder="Email" aria-label="Email" />
-              </div>
+              </div> -->
               <div class="mb-3">
                 <soft-input id="password" type="password" placeholder="Password" aria-label="Password" />
               </div>
@@ -115,7 +114,7 @@
 
 <script setup>
 import backgroundImage from "@/assets/img/curved-images/curved6.jpg";
-import Navbar from "@/examples/PageLayout/Navbar.vue";
+import MyNavbar from "@/components/MyNavbar.vue";
 import AppFooter from "@/examples/PageLayout/Footer.vue";
 import SoftInput from "@/components/SoftInput.vue";
 import SoftCheckbox from "@/components/SoftCheckbox.vue";
@@ -137,13 +136,14 @@ onBeforeUnmount(() => {
   store.commit('toggleHideConfig')
 })
 
-import { register } from "@/request/user";
+import { register } from "../request/user";
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
 const handleSubmit = (e) => {
   e.preventDefault()
+  console.log("register:\n",e.target.name.value, e.target.password.value)
   register(e.target.name.value, e.target.password.value)
     .then((res) => {
       console.log(res.data)

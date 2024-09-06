@@ -1,3 +1,4 @@
+<!-- no longer needed 'cause it's merged to the top file -->
 <template>
     <div class="card h-100">
       <div class="p-3 pb-0 card-header">

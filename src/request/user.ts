@@ -4,31 +4,7 @@ const request = axios.create({
     baseURL: 'api/user',
     timeout: 2000,
     withCredentials: true,
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    }
 })
-<<<<<<< HEAD
-=======
-
-request.defaults.withCredentials = true;
-
-request.interceptors.request.use(config => {
-    return config
-}, error => {
-    return Promise.reject(error)
-})
-
-request.interceptors.response.use(response => {
-    return response
-}, error => {
-    return Promise.reject(error)
-})
-interface User {
-    username: string
-    password: string
-}
->>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
 
 interface Response {
     config: object,
@@ -40,10 +16,10 @@ interface Response {
 }
 
 export const register = (username: string, password: string): Promise<Response> =>
-    request.post('/register', { username, password });
+    request.post('/register', { username, password }, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
 
 export const login = (username: string, password: string): Promise<Response> =>
-    request.post('/login', { username, password });
+    request.post('/login', { username, password }, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
 
 // export function logout() {
 //     request.get('/logout').then(res => {
@@ -53,23 +29,25 @@ export const login = (username: string, password: string): Promise<Response> =>
 //     })
 // }
 
-<<<<<<< HEAD
 export const getUserInfo = (): Promise<Response> =>
-    request.get('/userInfo',{
-        headers: { 'Authorization': localStorage.getItem('token') }
-    });
-=======
-export function getUserInfo() {
-    request.get('/userInfo').then(res => {
-        return res.data
-    }).catch(err => {
-        console.log(err)
-    })
-}
->>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
+    request.get('/userInfo', { headers: { 'Authorization': localStorage.token } })
 
-export const updateUserInfo = (data: any) =>
-    request.post('/update', data)
+
+export const updateUserInfo = (id: number, username: string, nickname: string, email: string) =>
+    request.put('/update', { id, username, nickname, email }, { headers: { 'Authorization': localStorage.token } })
+
+export const updatePassword = (old_pwd, new_pwd, re_pwd) =>
+    request.patch('/updatePwd', { old_pwd, new_pwd, re_pwd }, { headers: { 'Authorization': localStorage.token } })
 
 export const updateAvatar = (data: FormData) =>
     request.patch('/updateAvatar', data)
+
+export const removeStorage = () => {
+    sessionStorage.removeItem("token");
+    localStorage.removeItem("token");
+    localStorage.removeItem("sessionID");
+    localStorage.removeItem("sourceLanguage");
+    localStorage.removeItem("style");
+    localStorage.removeItem("targetLanguage");
+    localStorage.removeItem("user_id");
+}

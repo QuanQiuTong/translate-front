@@ -1,18 +1,35 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Dashboard from "@/views/Dashboard.vue";
-import Tables from "@/views/Tables.vue";
-import Billing from "@/views/Billing.vue";
-import VirtualReality from "@/views/VirtualReality.vue";
-import Profile from "@/views/Profile.vue";
-import Rtl from "@/views/Rtl.vue";
-import SignIn from "@/views/SignIn.vue";
-import SignUp from "@/views/SignUp.vue";
+import { ElMessage } from "element-plus";
+import { getUserInfo, removeStorage } from "../request/user";
+
+const checkAuth = async (to, from, next) => {
+  if (!localStorage.token) {
+    next("/sign-in");
+    ElMessage.warning({
+      showClose: true,
+      message: "Please Sign In First!",
+    });
+    return;
+  }
+  try {
+    const res = await getUserInfo();
+    console.log(res.data);
+    if (res.data.code !== 0) throw 1;
+    next();
+  } catch (e) {
+    removeStorage();
+    next("/sign-in");
+    ElMessage.warning("Token Expired, Please Sign In Again!");
+  }
+};
 
 const routes = [
   {
     path: "/",
     name: "/",
     redirect: "/translate",
+    // component: () => import("@/views/Main"),
   },
   {
     path: "/dashboard",
@@ -20,59 +37,56 @@ const routes = [
     component: Dashboard,
   },
   {
-    path: "/tables",
-    name: "Tables",
-    component: Tables,
-  },
-  {
-    path: "/billing",
-    name: "Billing",
-    component: Billing,
-  },
-  {
-    path: "/virtual-reality",
-    name: "Virtual Reality",
-    component: VirtualReality,
-  },
-  {
     path: "/profile",
     name: "Profile",
-    component: () => import("@/views/UserInfo.vue"),// Profile,
-  },
-  {
-    path: "/rtl-page",
-    name: "Rtl",
-    component: Rtl,
+    component: () => import("@/views/UserInfo.vue"), // Profile,
+    beforeEnter: checkAuth,
   },
   {
     path: "/sign-in",
     name: "Sign In",
-    component: SignIn,
+    component: () => import("@/views/SignIn.vue"),
   },
   {
     path: "/sign-up",
     name: "Sign Up",
-    component: SignUp,
+    component: () => import("@/views/SignUp.vue"),
   },
   {
     path: "/translate",
-    name: "Translate",
     component: () => import("@/views/Translate.vue"),
+    beforeEnter: checkAuth,
   },
   {
     path: "/user",
-    name: "User",
     component: () => import("@/views/User.vue"),
   },
   {
     path: "/test",
-    name: "Test",
-    component: () => import("@/views/Test.vue"),
-  }
+    component: () => import("@/test/Test.vue"),
+  },
+  {
+    path: "/preference",
+    component: () => import("@/views/Preference.vue"),
+    beforeEnter: checkAuth,
+  },
+  {
+    path: "/dictionary",
+    component: () => import("@/views/Dictionary.vue"),
+  },
+  {
+    path: "/sign-out",
+    name: "Sign Out",
+    beforeEnter: (to, from, next) => {
+      removeStorage();
+      next("/sign-in");
+      ElMessage.success("Succeccfully Signed Out!");
+    },
+  },
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
   linkActiveClass: "active",
 });
