@@ -50,7 +50,13 @@
               <div class="top-0 oblique position-absolute h-100 d-md-block d-none me-n8">
                 <div class="bg-cover oblique-image position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" :style="{
             backgroundImage:
+<<<<<<< HEAD
               'url(' + backgroundImage + ')',
+=======
+              'url(' +
+              require('@/assets/img/curved-images/curved9.jpg') +
+              ')',
+>>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
           }"></div>
               </div>
             </div>
@@ -102,7 +108,11 @@ const handleSubmit = (e) => {
     .then((res) => {
       console.log(res.data);
       localStorage.setItem("token", res.data.data);
+<<<<<<< HEAD
       router.push('/');
+=======
+      router.push({ name: "Dashboard" });
+>>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
     })
     .catch((err) => {
       console.error(err);

@@ -28,7 +28,15 @@ export default defineConfig({
     viteCommonjs(),
     envCompatible(),
     createHtmlPlugin({
+<<<<<<< HEAD
       template: './index.html' // 指定入口 HTML 文件的路径为根目录下的 index.html
+=======
+      inject: {
+        data: {
+          title: "vue-soft-ui-dashboard",
+        },
+      },
+>>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
     }),
   ],
   build: {},
@@ -46,7 +54,11 @@ export default defineConfig({
             rewrite: (path) => path.replace(/^\/api/, ''),
         },
     },
+<<<<<<< HEAD
   },
   base: "./", // 设置打包路径
+=======
+  }
+>>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
 });
 

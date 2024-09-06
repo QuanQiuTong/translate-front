@@ -117,9 +117,15 @@ const remove = (row: any) => {
 
 <style lang="scss" scoped>
 $button-gradient-colors: (
+<<<<<<< HEAD
     "red": (#ff0000, #ff7f7f),
     "blue": (#0000ff, #7f7fff),
     // Add more colors here
+=======
+  "red": (#ff0000, #ff7f7f),
+  "blue": (#0000ff, #7f7fff),
+  // Add more colors here
+>>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
 );
 
 @each $prop, $value in $button-gradient-colors {

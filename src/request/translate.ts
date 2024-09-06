@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import axios from "axios";
 
 export const request = axios.create({
@@ -9,6 +10,38 @@ request.interceptors.request.use((config) => {
   config.headers.Authorization = localStorage.getItem("token");
   return config;
 });
+=======
+import axios from 'axios'
+import { myUserStore } from '@/store/user'
+const userStore = myUserStore()
+
+const request = axios.create({
+    baseURL: 'http://localhost:8080/trans',
+    timeout: 2000,
+    withCredentials: true,
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': userStore.authKey
+    }
+})
+
+request.interceptors.request.use(config => {
+    return config
+}, error => {
+    return Promise.reject(error)
+})
+
+request.interceptors.response.use(response => {
+    return response
+}, error => {
+    return Promise.reject(error)
+})
+
+interface TranslateData {
+    content: string
+}
+>>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
 
 interface Response {
   config: object;
@@ -19,6 +52,7 @@ interface Response {
   statusText: string;
 }
 
+<<<<<<< HEAD
 export const translate = async (data: string): Promise<Response> =>
   request.post("/trans/submitPassage", {
     sessionId: parseInt(localStorage.sessionID),
@@ -180,3 +214,8 @@ export const queryDict = async(word: string) => {
   const arr = JSON.parse(str);
   return arr;
 };
+=======
+export const translate = (data: TranslateData) : Promise<Response> => {
+    return request.post('/submitPassage', data)
+}
+>>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f

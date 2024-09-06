@@ -1,7 +1,12 @@
 import axios from 'axios'
 
+<<<<<<< HEAD
 const req = axios.create({
     baseURL: 'api',
+=======
+const request = axios.create({
+    baseURL: 'api/session',
+>>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
     timeout: 2000,
     withCredentials: true,
 })
@@ -37,12 +42,22 @@ export const latestSession = async (): Promise<sessionOutline> => {
 }
 
 const setPreference = async (style: string, sourceLanguage: string, targetLanguage: string) => {
+<<<<<<< HEAD
     let res = await req.post('/tempPrefer/setLanguage', {
+=======
+    let res = await axios.post(
+        'api/tempPrefer/setLanguage', {
+>>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
         sessionId: parseInt(localStorage.sessionID),
         source_language: sourceLanguage,
         target_language: targetLanguage
     })
+<<<<<<< HEAD
     await req.post('/tempPrefer/setStyle', {
+=======
+    await axios.post(
+        'api/tempPrefer/setStyle', {
+>>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
         sessionId: parseInt(localStorage.sessionID),
         style: style
     })

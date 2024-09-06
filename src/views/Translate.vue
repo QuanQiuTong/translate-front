@@ -1,10 +1,14 @@
 <script setup>
+<<<<<<< HEAD
 import MyNavBar from "@/components/MyNavBar.vue";
+=======
+>>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
 import SoftButton from "@/components/SoftButton.vue";
 import SourceLanguage from "@/components/SourceLanguage.vue";
 import SelectStyle from "@/components/SelectStyle.vue";
 import TargetLanguage from "@/components/TargetLanguage.vue";
 import ReplaceList from "@/components/ReplaceList.vue";
+<<<<<<< HEAD
 import HistoryList from "../components/HistoryList.vue";
 
 import { onMounted, onBeforeUnmount } from 'vue'
@@ -25,17 +29,28 @@ onBeforeUnmount(() => {
   body.classList.add("bg-gray-100");
 })
 
+=======
+>>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
 
 import { ref } from "vue";
 import { initPreferences } from "../request/pref";
 import { initializeSession } from "../request/session";
+<<<<<<< HEAD
 import { queryDict, translate } from "../request/translate.ts";
+=======
+import { translate } from "../request/translate.ts";
+>>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
 import { ElMessage } from "element-plus";
 
 initPreferences();
 initializeSession();
 
+<<<<<<< HEAD
 const input = ref(""), out = ref(""), out2 = ref("");
+=======
+const input = ref("");
+const out = ref("");
+>>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
 const submit = () => {
   console.log('submit:\n' + input.value);
   translate(input.value)
@@ -49,6 +64,7 @@ const submit = () => {
     });
 };
 
+<<<<<<< HEAD
 const showReplace = ref(false), showHistory = ref(false);
 const viewReplace = () => {
   showReplace.value = true;
@@ -121,6 +137,21 @@ const selectText = (e) => {
 
   <div class="container-fluid">
 
+=======
+const drawer = ref(false);
+const viewReplace = () => {
+  drawer.value = true;
+};
+
+</script>
+
+<template>
+  <el-drawer v-model="drawer" title="替换词" size="36%">
+    <ReplaceList />
+  </el-drawer>
+
+  <div class="container-fluid py-1">
+>>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
     <div class="row">
       <div class="col-12 col-lg-6">
         <SourceLanguage />
@@ -132,12 +163,20 @@ const selectText = (e) => {
         <TargetLanguage />
       </div>
     </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
     <div class="row">
       <div class="col-12 col-lg-6">
 
 
+<<<<<<< HEAD
         <textarea v-model="input" class="form-control" placeholder="输入待翻译的文本" @mouseup="selectText($event, 'input')" />
+=======
+        <textarea v-model="input" class="form-control" placeholder="输入待翻译的文本"
+          :autosize="{ minRows: 40, maxRows: 50 }" />
+>>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
         <div class="mb-2" />
         <SoftButton variant="gradient" color="success" @click="submit">
           提交
@@ -148,12 +187,19 @@ const selectText = (e) => {
       <div class="col-12 col-lg-6">
 
 
+<<<<<<< HEAD
         <textarea v-model="out" class="form-control" placeholder="翻译结果" autosize @mouseup="selectText($event, 'input')"/>
         <textarea v-model="out2" class="form-control" placeholder="翻译结果" autosize />
         <div class="mb-2" />
         <SoftButton variant="gradient" @click="viewReplace">替换词</SoftButton>
         <span class="mx-2" />
         <SoftButton variant="gradient" @click="viewHistory">历史记录</SoftButton>
+=======
+        <textarea v-model="out" class="form-control" placeholder="翻译结果" autosize />
+        <div class="mb-2" />
+        <SoftButton variant="gradient" @click="viewReplace">替换词</SoftButton>
+
+>>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
       </div>
     </div>
   </div>
@@ -166,8 +212,11 @@ const selectText = (e) => {
   margin-left: 5px;
   margin-right: 5px;
 }
+<<<<<<< HEAD
 
 .textarea {
   min-height: 40vh;
 }
+=======
+>>>>>>> 1af6457cb3c2d72dc1843bb870373deb5458be0f
 </style>
